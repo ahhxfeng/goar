@@ -380,22 +380,6 @@ func (c *Client) SubmitTransaction(tx *types.Transaction) (status string, code i
 	// this is work fine with the mainnet
 	body, statusCode, err := c.httpPost("tx", by)
 
-	// req, err := http.NewRequest("POST", u.String(), bytes.NewReader(by))
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// req.Header.Set("Content-Type", "application/json")
-	// req.Header.Set("Accept-Encoding", "gzip, deflate, br")
-	// req.Header.Set("Accept", "application/json")
-	// resp, err := c.client.Do(req)
-
-	// req, err :=http.NewRequest("POST", "tx", bytes.NewReader(by))
-
-	// if err != nil {
-	// 	return "req gen failed", 500, err
-	// }
-	// req.Header.Set()
-
 	status = string(body)
 	code = statusCode
 	return
@@ -555,6 +539,8 @@ func (c *Client) httpGet(_path string) (body []byte, statusCode int, err error) 
 // 	}
 
 // 	u.Path = path.Join(u.Path, _path)
+// 	fmt.Println("API:", u.String())
+// 	fmt.Println("POST data", bytes.NewReader(payload))
 
 // 	resp, err := c.client.Post(u.String(), "application/json", bytes.NewReader(payload))
 // 	if err != nil {
@@ -574,6 +560,8 @@ func (c *Client) httpPost(_path string, payload []byte) (body []byte, statuscode
 	}
 
 	u.Path = path.Join(u.Path, _path)
+	fmt.Println("API", u.String())
+	// fmt.Println("POST data", bytes.NewReader(payload))
 
 	req, err := http.NewRequest("POST", u.String(), bytes.NewReader(payload))
 
@@ -581,9 +569,13 @@ func (c *Client) httpPost(_path string, payload []byte) (body []byte, statuscode
 		return nil, -1, err
 	}
 
-	req.Header.Set("Content-type", "application/json")
-	req.Header.Set("X-Network", "arweave.localnet")
-	req.Header.Set("X-Internal-api-Secret", "ItIsTestApiSecretAndVeryHardToGuess")
+	req.Header.Set("Content-Type", "application/json")
+	// req.Header.Set("X-Network", "arweave.localnet")
+	// req.Header.Set("X-Internal-api-Secret", "ItIsTestApiSecretAndVeryHardToGuess")
+	// fmt.Println("client.go fuc httpPost header set success")
+	fmt.Println("requset header", req.Header)
+
+	// fmt.Println("requeset: ", req)
 
 	resp, err := c.client.Do(req)
 	if err != nil {

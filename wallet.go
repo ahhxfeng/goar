@@ -75,6 +75,7 @@ func (w *Wallet) SendWinstonSpeedUp(amount *big.Int, target string, tags []types
 		DataSize: "0",
 		Reward:   fmt.Sprintf("%d", reward*(100+speedFactor)/100),
 	}
+	fmt.Println("SendWinstoSpeedUp done ?")
 
 	return w.SendTransaction(tx)
 }
@@ -119,10 +120,11 @@ func (w *Wallet) SendDataStreamSpeedUp(data *os.File, tags []types.Tag, speedFac
 	}
 
 	tx := &types.Transaction{
-		Format:     2,
-		Target:     "",
-		Quantity:   "0",
-		Tags:       utils.TagsEncode(tags),
+		Format:   2,
+		Target:   "",
+		Quantity: "0",
+		Tags:     utils.TagsEncode(tags),
+		// Tags: [],
 		Data:       "",
 		DataReader: data,
 		DataSize:   fmt.Sprintf("%d", fileInfo.Size()),
